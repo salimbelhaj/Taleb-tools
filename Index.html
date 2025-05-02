@@ -3,54 +3,143 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>GPA Calculator</title>
+  <title>Smart Student Hub</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f7f8;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #0077cc;
+      color: white;
+      padding: 1em;
+      text-align: center;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      background: #e0e0e0;
+      padding: 0.5em;
+    }
+    nav a {
+      text-decoration: none;
+      color: #0077cc;
+      font-weight: bold;
+    }
+    section {
+      padding: 2em;
+      display: none;
+    }
+    section.active {
+      display: block;
+    }
+    .box {
+      background: white;
+      padding: 1em;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #ccc;
+      max-width: 600px;
+      margin: auto;
+    }
+    button {
+      padding: 0.5em 1em;
+      margin-top: 1em;
+      font-size: 16px;
+    }
+  </style>
 </head>
 <body>
-  <h1>Welcome to GPA Calculator</h1>
-  <p>Use this tool to calculate your GPA easily.</p>
+  <header>
+    <h1>Smart Student Hub</h1>
+    <p>GPA Calculator + Fun Game</p>
+  </header>
 
-  <!-- GPA Calculator -->
-  <form>
-    <label>Grade 1: <input type="number" name="grade1" required></label><br>
-    <label>Grade 2: <input type="number" name="grade2" required></label><br>
-    <label>Grade 3: <input type="number" name="grade3" required></label><br>
-    <button type="button" onclick="calculateGPA()">Calculate GPA</button>
-  </form>
-  <p id="result"></p>
+  <nav>
+    <a href="#" onclick="showSection('gpa')">GPA Calculator</a>
+    <a href="#" onclick="showSection('game')">Click Game</a>
+    <a href="#" onclick="showSection('about')">About</a>
+  </nav>
+
+  <section id="gpa" class="active">
+    <div class="box">
+      <h2>GPA Calculator</h2>
+      <p>Enter your grades to calculate your average GPA:</p>
+      <input type="number" id="grade1" placeholder="Grade 1" /><br><br>
+      <input type="number" id="grade2" placeholder="Grade 2" /><br><br>
+      <input type="number" id="grade3" placeholder="Grade 3" /><br><br>
+      <button onclick="calculateGPA()">Calculate GPA</button>
+      <p id="gpaResult"></p>
+    </div>
+  </section>
+
+  <section id="game">
+    <div class="box">
+      <h2>Click Speed Game</h2>
+      <p>Click the button as many times as you can in 5 seconds!</p>
+      <button id="clickBtn" onclick="startClicking()">Start Game</button>
+      <p id="clickCount"></p>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="box">
+      <h2>About This Site</h2>
+      <p>This site was created by a smart student to help others calculate GPA and have fun!</p>
+      <p>More features coming soon.</p>
+    </div>
+  </section>
+
+  <!-- AdSense Script -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2682047232375814"
+    crossorigin="anonymous"></script>
 
   <script>
+    function showSection(id) {
+      document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
     function calculateGPA() {
-      const g1 = parseFloat(document.querySelector('[name="grade1"]').value);
-      const g2 = parseFloat(document.querySelector('[name="grade2"]').value);
-      const g3 = parseFloat(document.querySelector('[name="grade3"]').value);
+      const g1 = parseFloat(document.getElementById('grade1').value);
+      const g2 = parseFloat(document.getElementById('grade2').value);
+      const g3 = parseFloat(document.getElementById('grade3').value);
       if (isNaN(g1) || isNaN(g2) || isNaN(g3)) {
-        document.getElementById('result').innerText = "Please enter all grades.";
+        document.getElementById('gpaResult').innerText = "Please enter all grades.";
         return;
       }
       const gpa = ((g1 + g2 + g3) / 3).toFixed(2);
-      document.getElementById('result').innerText = "Your GPA is: " + gpa;
+      let feedback = "Your GPA is: " + gpa;
+      if (gpa < 10) feedback += " - Needs improvement.";
+      else if (gpa < 14) feedback += " - Good, keep going!";
+      else feedback += " - Excellent!";
+      document.getElementById('gpaResult').innerText = feedback;
+    }
+
+    let count = 0;
+    let active = false;
+
+    function startClicking() {
+      if (active) return;
+      count = 0;
+      active = true;
+      document.getElementById('clickCount').innerText = "Start clicking!";
+      const btn = document.getElementById('clickBtn');
+      btn.innerText = "Click!";
+      btn.onclick = () => {
+        if (active) count++;
+      };
+
+      setTimeout(() => {
+        active = false;
+        document.getElementById('clickCount').innerText = `You clicked ${count} times!`;
+        btn.innerText = "Play Again";
+        btn.onclick = startClicking;
+      }, 5000);
     }
   </script>
-
-  <hr>
-  <!-- Educational Content -->
-  <h2>How to Calculate GPA</h2>
-  <p>To calculate your GPA, sum your grades and divide by the number of subjects.</p>
-  <p>Example: (14 + 12 + 16) ÷ 3 = 14 GPA</p>
-
-  <h2>Tips to Improve Your GPA</h2>
-  <ul>
-    <li>Review lessons regularly</li>
-    <li>Organize your study schedule</li>
-    <li>Get enough sleep and eat healthy</li>
-    <li>Ask teachers or friends if you don’t understand</li>
-  </ul>
-
-  <h2>About This Site</h2>
-  <p>This tool was created by a student to help others easily calculate their GPA and improve their studies.</p>
-
-  <!-- AdSense Code -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2682047232375814"
-    crossorigin="anonymous"></script>
 </body>
 </html>
