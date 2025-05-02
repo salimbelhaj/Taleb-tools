@@ -1,18 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>GPA Calculator</title>
+
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2682047232375814"
      crossorigin="anonymous"></script>
 </head>
-<body style="font-family: Arial, sans-serif; margin: 20px;">
-
+<body style="font-family: Arial; padding: 20px;">
   <h1>GPA Calculator</h1>
-
-  <p>Enter your grades (out of 20) and click "Calculate GPA":</p>
+  <p>Enter your grades (out of 20):</p>
 
   <textarea id="gradesInput" rows="10" cols="40" placeholder="Example: 14.5, 17, 13, 18.5"></textarea>
   <br><br>
@@ -20,7 +19,6 @@
 
   <h2 id="result"></h2>
 
-  <!-- Google AdSense Display Ad (optional) -->
   <ins class="adsbygoogle"
        style="display:block"
        data-ad-client="ca-pub-2682047232375814"
@@ -35,21 +33,15 @@
     function calculateGPA() {
       const input = document.getElementById('gradesInput').value;
       const grades = input.split(',').map(s => parseFloat(s.trim())).filter(n => !isNaN(n));
-
       if (grades.length === 0) {
         document.getElementById('result').innerText = "Please enter valid grades.";
         return;
       }
-
-      const sum = grades.reduce((acc, grade) => acc + grade, 0);
+      const sum = grades.reduce((acc, val) => acc + val, 0);
       const avg = sum / grades.length;
-
-      // Convert from 20-scale to 4.0-scale
       const gpa = (avg / 20) * 4;
-
       document.getElementById('result').innerText = `Your GPA is: ${gpa.toFixed(2)} / 4.0`;
     }
   </script>
-
 </body>
 </html>
