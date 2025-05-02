@@ -2,46 +2,104 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>GPA Calculator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GPA Calculator - Slim</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    header {
+      background-color: #4caf50;
+      color: white;
+      padding: 1rem 2rem;
+      text-align: center;
+    }
+    .container {
+      max-width: 600px;
+      margin: 2rem auto;
+      background-color: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input, button {
+      padding: 0.6rem;
+      margin: 0.5rem 0;
+      width: 100%;
+      font-size: 1rem;
+    }
+    button {
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .result {
+      font-size: 1.2rem;
+      margin-top: 1rem;
+      font-weight: 600;
+    }
+    footer {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #777;
+      margin-top: 2rem;
+    }
+  </style>
 
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2682047232375814"
      crossorigin="anonymous"></script>
 </head>
-<body style="font-family: Arial; padding: 20px;">
-  <h1>GPA Calculator</h1>
-  <p>Enter your grades (out of 20):</p>
+<body>
 
-  <textarea id="gradesInput" rows="10" cols="40" placeholder="Example: 14.5, 17, 13, 18.5"></textarea>
-  <br><br>
-  <button onclick="calculateGPA()">Calculate GPA</button>
+  <header>
+    <h1>GPA Calculator</h1>
+    <p>Made by Slim – Boost your academic performance!</p>
+  </header>
 
-  <h2 id="result"></h2>
+  <div class="container">
+    <h2>Enter your grades:</h2>
+    <input type="number" id="grade1" placeholder="Subject 1 grade" />
+    <input type="number" id="grade2" placeholder="Subject 2 grade" />
+    <input type="number" id="grade3" placeholder="Subject 3 grade" />
+    <button onclick="calculateGPA()">Calculate GPA</button>
+    <div class="result" id="result"></div>
 
-  <ins class="adsbygoogle"
-       style="display:block"
-       data-ad-client="ca-pub-2682047232375814"
-       data-ad-slot="1234567890"
-       data-ad-format="auto"
-       data-full-width-responsive="true"></ins>
-  <script>
-       (adsbygoogle = window.adsbygoogle || []).push({});
-  </script>
+    <h3>Tips to improve your GPA:</h3>
+    <ul>
+      <li>Review material daily, not just before exams.</li>
+      <li>Sleep well — it boosts memory and focus.</li>
+      <li>Ask your teachers for feedback.</li>
+      <li>Study with friends to stay motivated.</li>
+    </ul>
+  </div>
+
+  <footer>
+    &copy; 2025 Slim Dev | Built with love and coffee
+  </footer>
 
   <script>
     function calculateGPA() {
-      const input = document.getElementById('gradesInput').value;
-      const grades = input.split(',').map(s => parseFloat(s.trim())).filter(n => !isNaN(n));
-      if (grades.length === 0) {
-        document.getElementById('result').innerText = "Please enter valid grades.";
+      const g1 = parseFloat(document.getElementById('grade1').value);
+      const g2 = parseFloat(document.getElementById('grade2').value);
+      const g3 = parseFloat(document.getElementById('grade3').value);
+      if (isNaN(g1) || isNaN(g2) || isNaN(g3)) {
+        document.getElementById('result').textContent = "Please enter all grades.";
         return;
       }
-      const sum = grades.reduce((acc, val) => acc + val, 0);
-      const avg = sum / grades.length;
-      const gpa = (avg / 20) * 4;
-      document.getElementById('result').innerText = `Your GPA is: ${gpa.toFixed(2)} / 4.0`;
+      const avg = ((g1 + g2 + g3) / 3).toFixed(2);
+      document.getElementById('result').textContent = `Your GPA is: ${avg}`;
     }
   </script>
+
 </body>
 </html>
